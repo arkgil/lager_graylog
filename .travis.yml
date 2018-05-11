@@ -6,13 +6,19 @@ branches:
 cache:
   - ~/.cache/rebar3
 
+install:
+  - pip install --user codecov
+
 otp_release:
   - 20.3
   - 19.3
 
 script:
-  - rebar3 ct
+  - rebar3 ct --cover
   - rebar3 dialyzer
+
+after_success:
+  - codecov --file _build/test/cover/ct.coverdata
 
 notifications:
   email: mongoose-im@erlang-solutions.com
